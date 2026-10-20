@@ -1,0 +1,44 @@
+name: Deploy a S3
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+# id-token: write permite pedir el token OIDC para asumir el rol en AWS
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: deploy-s3
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar MkDocs
+        run: pip install -r requirements.txt
+
+      - name: Compilar el sitio
+        run: |
+          mkdir -p build-docs
+          cp *.md build-docs/
+          mkdocs build --strict
+
+      - name: Credenciales de AWS (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Subir a S3
+        run: aws s3 sync site/ "s3://${{ vars.AWS_S3_BUCKET }}" --delete

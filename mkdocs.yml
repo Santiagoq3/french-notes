@@ -1,0 +1,47 @@
+site_name: Francés desde cero
+site_description: Guía base de francés (nivel A1) para hispanohablantes
+
+# MkDocs no admite usar la raíz del repo como docs_dir, así que el workflow
+# copia los .md a build-docs/ antes de compilar. El sitio queda en site/.
+docs_dir: build-docs
+site_dir: site
+
+theme:
+  name: material
+  language: es
+  features:
+    - search.highlight
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      toggle:
+        icon: material/weather-night
+        name: Modo oscuro
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Modo claro
+
+markdown_extensions:
+  - tables
+  - admonition
+  - toc:
+      permalink: true
+
+nav:
+  - Inicio: README.md
+  - 1. Pronunciación: 01-pronunciacion.md
+  - 2. Saludos y frases básicas: 02-saludos-y-frases-basicas.md
+  - 3. Artículos y sustantivos: 03-articulos-y-sustantivos.md
+  - 4. Pronombres, être y avoir: 04-pronombres-etre-avoir.md
+  - 5. Verbos en presente: 05-verbos-presente.md
+  - 6. Negación y preguntas: 06-negacion-y-preguntas.md
+  - 7. Adjetivos: 07-adjetivos.md
+  - 8. Números, fechas y hora: 08-numeros-fechas-hora.md
+  - 9. Vocabulario esencial: 09-vocabulario-esencial.md
+  - 10. Pasado y futuro: 10-pasado-y-futuro.md
+  - 11. Falsos amigos y errores: 11-falsos-amigos-y-errores.md
